@@ -1,9 +1,20 @@
+import { useEffect } from "react";
+import { io } from "socket.io-client";
+
 function App() {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <h1 className="text-4xl font-bold">GTG Game</h1>
-    </div>
-  );
+  useEffect(() => {
+  const socket = io("http://localhost:8080");
+
+  socket.on("connect", () => {
+    console.log("Connected:", socket.id);
+  });
+
+  return () => {
+    socket.disconnect(); // ✅ correct cleanup
+  };
+}, []);
+
+  return <h1>GTG Game</h1>;
 }
 
 export default App;
