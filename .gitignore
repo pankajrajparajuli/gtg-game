@@ -1,0 +1,77 @@
+# ==========================================
+# Dependencies & Package Managers
+# ==========================================
+node_modules/
+.pnpm-store/
+# If using pnpm-workspace.yaml, do not ignore it, but ignore local locks if needed
+# pnpm-lock.yaml should usually be committed, uncomment below only if required
+# pnpm-lock.yaml
+
+# ==========================================
+# Turbo (Turborepo) & Build Caches
+# ==========================================
+.turbo/
+.cache/
+
+# ==========================================
+# Build Outputs & Distribution
+# ==========================================
+# Generic build folders
+dist/
+build/
+out/
+.next/
+
+# TypeScript specific
+*.tsbuildinfo
+
+# ==========================================
+# Environment Variables & Secrets
+# ==========================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env.local
+
+# Backup files
+.env.bak
+.env.*.bak
+
+# ==========================================
+# Logs & Debugging
+# ==========================================
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ==========================================
+# Testing & Coverage
+# ==========================================
+coverage/
+.nyc_output/
+.jest/
+cypress/videos/
+cypress/screenshots/
+.playwright/
+
+# ==========================================
+# Editor & OS Specific
+# ==========================================
+# VS Code
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+
+# WebStorm / JetBrains
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
