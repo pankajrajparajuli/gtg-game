@@ -75,3 +75,8 @@ cypress/screenshots/
 # OS files
 .DS_Store
 Thumbs.db
+
+# ==========================================
+# Miscellaneous
+# ==========================================
+gtg-research/
