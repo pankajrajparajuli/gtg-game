@@ -216,6 +216,9 @@ importers:
 
   apps/backend:
     dependencies:
+      '@gtg/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       cors:
         specifier: ^2.8.6
         version: 2.8.6
@@ -250,6 +253,9 @@ importers:
 
   apps/frontend:
     dependencies:
+      '@gtg/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       react:
         specifier: ^19.2.6
         version: 19.2.6
