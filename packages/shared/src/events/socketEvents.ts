@@ -1,5 +1,6 @@
 export const SOCKET_EVENTS = {
   // Client -> Server
+  CREATE_ROOM: "create_room",
   JOIN_ROOM: "join_room",
   LEAVE_ROOM: "leave_room",
   START_GAME: "start_game",
@@ -8,6 +9,7 @@ export const SOCKET_EVENTS = {
   SEND_MESSAGE: "send_message",
 
   // Server -> Client
+  ROOM_CREATED: "room_created",
   ROOM_UPDATED: "room_updated",
   GAME_STARTED: "game_started",
   TURN_STARTED: "turn_started",
