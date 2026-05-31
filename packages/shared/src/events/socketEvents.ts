@@ -10,6 +10,7 @@ export const SOCKET_EVENTS = {
 
   // Server -> Client
   ROOM_CREATED: "room_created",
+  ROOM_ERROR: "room_error",
   ROOM_UPDATED: "room_updated",
   GAME_STARTED: "game_started",
   TURN_STARTED: "turn_started",
