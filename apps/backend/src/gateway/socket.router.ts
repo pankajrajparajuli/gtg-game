@@ -17,10 +17,6 @@ export function registerSocketRouter(
   socket.on(SOCKET_EVENTS.CREATE_ROOM, async () => {
     try {
       const room = await createRoom(socket.id);
-      // Join the creator socket to the room so they receive room updates
-      socket.join(room.id);
-      // Cache the room id on the socket for quick lookup during disconnect
-      socket.data.roomId = room.id;
       socket.emit(SOCKET_EVENTS.ROOM_CREATED, room);
     } catch (error) {
       console.error(`Error creating room for socket ${socket.id}:`, error);
@@ -43,8 +39,6 @@ export function registerSocketRouter(
       }
 
       socket.join(roomId);
-      // Cache the room id on the socket for quick lookup during disconnect
-      socket.data.roomId = roomId;
       io.to(roomId).emit(SOCKET_EVENTS.ROOM_UPDATED, room);
       
     } catch (error) {
@@ -58,23 +52,18 @@ export function registerSocketRouter(
     console.log(`❌ Disconnected: ${socket.id}`);
 
     try {
-      // Prefer the socket-stored room id for quick lookup
-      const socketRoomId: string | undefined = socket.data?.roomId;
+      // 1. Find which room this specific player was sitting in
+      const room = await findRoomByPlayerId(socket.id);
+      
+      // If they weren't in a room (e.g., disconnected while on main menu), stop here
+      if (!room) return;
 
-      let roomIdToClean: string | undefined = socketRoomId;
+      // 2. Remove them from the room and handle host-migration logic internally
+      const updatedRoom = await removePlayerFromRoom(room.id, socket.id);
 
-      // Fallback: search Redis if socket doesn't have a cached room id
-      if (!roomIdToClean) {
-        const room = await findRoomByPlayerId(socket.id);
-        if (!room) return;
-        roomIdToClean = room.id;
-      }
-
-      // Remove the player and update Redis. If the room is empty, this returns null
-      const updatedRoom = await removePlayerFromRoom(roomIdToClean, socket.id);
-
+      // 3. If the room still exists (meaning players are still inside), update everyone else
       if (updatedRoom) {
-        io.to(roomIdToClean).emit(SOCKET_EVENTS.ROOM_UPDATED, updatedRoom);
+        io.to(room.id).emit(SOCKET_EVENTS.ROOM_UPDATED, updatedRoom);
       }
     } catch (error) {
       console.error(`Error processing disconnect for socket ${socket.id}:`, error);
