@@ -3,11 +3,11 @@
 import { useRef, useEffect, useCallback, useState } from "react"
 import { Pencil, Eraser, Undo2, Trash2 } from "lucide-react"
 import { useGame } from "@/context/game-context"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui"
 import { cn } from "@/lib/utils"
 import { COLORS, BRUSH_SIZES, type CanvasPoint, type DrawingStroke } from "@/types/game"
 
-export function DrawingCanvas() {
+export function CanvasCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [isDrawing, setIsDrawing] = useState(false)
@@ -244,3 +244,5 @@ export function DrawingCanvas() {
     </div>
   )
 }
+
+export default CanvasCanvas

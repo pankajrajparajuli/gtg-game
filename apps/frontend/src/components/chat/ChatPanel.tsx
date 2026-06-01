@@ -3,15 +3,12 @@
 import { useState, useRef, useEffect, useCallback } from "react"
 import { Send, Image as ImageIcon, X, Search, Loader2 } from "lucide-react"
 import { useGame } from "@/context/game-context"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { Button, Input, ScrollArea } from "@/components/ui"
 import { cn } from "@/lib/utils"
 import type { GiphyGif, GiphySearchResponse } from "@/types/game"
 
-// GIPHY API configuration
-const GIPHY_API_KEY = import.meta.env.VITE_GIPHY_API_KEY || import.meta.env.NEXT_PUBLIC_GIPHY_API_KEY || "dc6zaTOxFJmzC" // Demo key for testing
-const GIPHY_API_URL = "https://api.giphy.com/v1/gifs"
+// Use backend proxy at `/api/giphy` which uses a server-side API key
+const GIPHY_PROXY_BASE = "/api/giphy"
 
 export function ChatPanel() {
   const { messages, sendMessage, sendGif, currentRoom } = useGame()
@@ -23,18 +20,14 @@ export function ChatPanel() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  // Auto-scroll to bottom on new messages
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
-  // Fetch trending GIFs on mount
   const fetchTrendingGifs = useCallback(async () => {
     setIsLoadingGifs(true)
     try {
-      const response = await fetch(
-        `${GIPHY_API_URL}/trending?api_key=${GIPHY_API_KEY}&limit=12&rating=g`
-      )
+      const response = await fetch(`${GIPHY_PROXY_BASE}/trending?limit=12&rating=g`)
       const data: GiphySearchResponse = await response.json()
       setGifs(data.data)
     } catch (error) {
@@ -44,7 +37,6 @@ export function ChatPanel() {
     }
   }, [])
 
-  // Search GIFs with debounce
   const searchGifs = useCallback(async (query: string) => {
     if (!query.trim()) {
       fetchTrendingGifs()
@@ -54,7 +46,7 @@ export function ChatPanel() {
     setIsLoadingGifs(true)
     try {
       const response = await fetch(
-        `${GIPHY_API_URL}/search?api_key=${GIPHY_API_KEY}&q=${encodeURIComponent(query)}&limit=12&rating=g`
+        `${GIPHY_PROXY_BASE}/search?q=${encodeURIComponent(query)}&limit=12&rating=g`
       )
       const data: GiphySearchResponse = await response.json()
       setGifs(data.data)
@@ -65,7 +57,6 @@ export function ChatPanel() {
     }
   }, [fetchTrendingGifs])
 
-  // Handle GIF picker open
   useEffect(() => {
     if (showGifPicker && gifs.length === 0) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -73,7 +64,6 @@ export function ChatPanel() {
     }
   }, [showGifPicker, gifs.length, fetchTrendingGifs])
 
-  // Debounced GIF search
   useEffect(() => {
     if (searchTimeoutRef.current) {
       clearTimeout(searchTimeoutRef.current)
@@ -215,3 +205,5 @@ export function ChatPanel() {
     </div>
   )
 }
+
+export default ChatPanel

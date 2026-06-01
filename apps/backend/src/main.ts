@@ -1,10 +1,13 @@
 import http from "node:http";
+import dotenv from "dotenv";
 
 import { Server } from "socket.io";
 
 import app from "./app.js";
 import redis from "./config/redis.js";
 import { registerSocketRouter } from "./gateway/socket.router.js";
+
+dotenv.config();
 
 const PORT = Number(process.env.PORT) || 8080;
 

@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 
 import healthRouter from "./controllers/health.controller.js";
+import giphyRouter from "./controllers/giphy.controller.js";
 
 const app = express();
 
@@ -17,5 +18,6 @@ app.use(
 app.use(express.json());
 
 app.use("/api", healthRouter);
+app.use("/api/giphy", giphyRouter);
 
 export default app;

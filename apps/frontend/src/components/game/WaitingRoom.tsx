@@ -3,8 +3,7 @@
 import { Play, Users, Copy, Check } from "lucide-react"
 import { useState } from "react"
 import { useGame } from "@/context/game-context"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
+import { Button, Textarea } from "@/components/ui"
 
 export function WaitingRoom() {
   const { currentRoom, startGame, customWords, setCustomWords, copyInviteLink } = useGame()
@@ -26,7 +25,6 @@ export function WaitingRoom() {
       <div className="bg-card rounded-2xl border-4 border-card-foreground/10 shadow-xl p-8 w-full max-w-lg">
         <h2 className="text-2xl font-bold text-card-foreground text-center mb-6">Waiting for Players</h2>
 
-        {/* Player count */}
         <div className="flex items-center justify-center gap-2 mb-8">
           <Users className="w-5 h-5 text-muted-foreground" />
           <span className="text-lg text-card-foreground">
@@ -34,7 +32,6 @@ export function WaitingRoom() {
           </span>
         </div>
 
-        {/* Custom words (optional) */}
         {isHost && (
           <div className="mb-6">
             <label className="block text-sm font-medium text-card-foreground mb-2">Custom Words (optional)</label>
@@ -48,7 +45,6 @@ export function WaitingRoom() {
           </div>
         )}
 
-        {/* Actions */}
         <div className="flex flex-col gap-3">
           {isHost && (
             <Button size="lg" className="w-full text-lg h-14 font-bold" onClick={startGame} disabled={!canStart}>
@@ -74,7 +70,6 @@ export function WaitingRoom() {
           </Button>
         </div>
 
-        {/* Room code display */}
         {currentRoom.isPrivate && (
           <div className="mt-6 text-center">
             <p className="text-sm text-muted-foreground mb-1">Room Code</p>
@@ -87,3 +82,5 @@ export function WaitingRoom() {
     </div>
   )
 }
+
+export default WaitingRoom

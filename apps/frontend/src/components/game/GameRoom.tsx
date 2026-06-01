@@ -1,11 +1,11 @@
 "use client"
 
 import { useGame } from "@/context/game-context"
-import { PlayersPanel } from "@/components/players-panel"
-import { StatusBar } from "@/components/status-bar"
-import { DrawingCanvas } from "@/components/drawing-canvas"
-import { ChatPanel } from "@/components/chat-panel"
-import { WaitingRoom } from "@/components/waiting-room"
+import { PlayersPanel } from "@/components/game/PlayersPanel"
+import { StatusBar } from "@/components/game/StatusBar"
+import { CanvasCanvas } from "@/components/canvas/CanvasCanvas"
+import { ChatPanel } from "@/components/chat/ChatPanel"
+import { WaitingRoom } from "@/components/game/WaitingRoom"
 
 export function GameRoom() {
   const { currentRoom } = useGame()
@@ -25,7 +25,7 @@ export function GameRoom() {
         <PlayersPanel />
 
         {/* Center: Canvas or Waiting Room */}
-        <div className="flex-1 flex flex-col">{isWaiting ? <WaitingRoom /> : <DrawingCanvas />}</div>
+        <div className="flex-1 flex flex-col">{isWaiting ? <WaitingRoom /> : <CanvasCanvas />}</div>
 
         {/* Right: Chat Panel */}
         <ChatPanel />
@@ -33,3 +33,5 @@ export function GameRoom() {
     </div>
   )
 }
+
+export default GameRoom

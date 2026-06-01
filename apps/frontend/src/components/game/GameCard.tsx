@@ -1,17 +1,14 @@
 "use client"
 
 import { useGame } from "@/context/game-context"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
+import { Input, Button, Card, CardContent, Label } from "@/components/ui"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui"
 import { Play, Users, Loader2, AlertCircle, LogIn, Settings, ArrowLeft, Clock, RotateCcw } from "lucide-react"
 import { useState, type ChangeEvent, type KeyboardEvent } from "react"
 import {
@@ -90,12 +87,10 @@ export function GameCard({ className = "" }: GameCardProps) {
     setShowSettings(false)
   }
 
-  // Settings view
   if (showSettings) {
     return (
       <Card className={`w-full max-w-sm bg-card/95 backdrop-blur-sm shadow-2xl border-0 ${className}`}>
         <CardContent className="p-6 space-y-5">
-          {/* Header with back button */}
           <div className="flex items-center gap-3">
             <Button
               variant="ghost"
@@ -111,7 +106,6 @@ export function GameCard({ className = "" }: GameCardProps) {
             </div>
           </div>
 
-          {/* Error message */}
           {error && (
             <div className="flex items-center gap-2 p-3 bg-destructive/10 text-destructive rounded-lg text-sm">
               <AlertCircle className="w-4 h-4 shrink-0" />
@@ -119,7 +113,6 @@ export function GameCard({ className = "" }: GameCardProps) {
             </div>
           )}
 
-          {/* Number of Players */}
           <div className="space-y-2">
             <Label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
               <Users className="w-4 h-4 text-secondary" />
@@ -144,7 +137,6 @@ export function GameCard({ className = "" }: GameCardProps) {
             </Select>
           </div>
 
-          {/* Number of Rounds */}
           <div className="space-y-2">
             <Label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
               <RotateCcw className="w-4 h-4 text-primary" />
@@ -169,7 +161,6 @@ export function GameCard({ className = "" }: GameCardProps) {
             </Select>
           </div>
 
-          {/* Draw Time */}
           <div className="space-y-2">
             <Label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
               <Clock className="w-4 h-4 text-accent" />
@@ -194,7 +185,6 @@ export function GameCard({ className = "" }: GameCardProps) {
             </Select>
           </div>
 
-          {/* Create Room Button */}
           <Button
             onClick={handleCreateRoom}
             disabled={isLoading}
@@ -212,11 +202,9 @@ export function GameCard({ className = "" }: GameCardProps) {
     )
   }
 
-  // Main view
   return (
     <Card className={`w-full max-w-sm bg-card/95 backdrop-blur-sm shadow-2xl border-0 ${className}`}>
       <CardContent className="p-6 space-y-4">
-        {/* Error message */}
         {error && (
           <div className="flex items-center gap-2 p-3 bg-destructive/10 text-destructive rounded-lg text-sm">
             <AlertCircle className="w-4 h-4 shrink-0" />
@@ -224,7 +212,6 @@ export function GameCard({ className = "" }: GameCardProps) {
           </div>
         )}
 
-        {/* Username Input */}
         <div className="space-y-2">
           <label
             htmlFor="username"
@@ -247,7 +234,6 @@ export function GameCard({ className = "" }: GameCardProps) {
           />
         </div>
 
-        {/* Primary Action - Play Button */}
         <Button
           onClick={handlePlay}
           disabled={isDisabled}
@@ -261,7 +247,6 @@ export function GameCard({ className = "" }: GameCardProps) {
           {isLoading ? "Joining..." : "Play!"}
         </Button>
 
-        {/* Secondary Action - Create Private Room */}
         <Button
           onClick={handleShowSettings}
           disabled={isDisabled}
@@ -276,7 +261,6 @@ export function GameCard({ className = "" }: GameCardProps) {
           Create Private Room
         </Button>
 
-        {/* Divider */}
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t border-border" />
@@ -286,7 +270,6 @@ export function GameCard({ className = "" }: GameCardProps) {
           </div>
         </div>
 
-        {/* Room Code Input */}
         <div className="flex gap-2">
           <Input
             type="text"
@@ -317,3 +300,5 @@ export function GameCard({ className = "" }: GameCardProps) {
     </Card>
   )
 }
+
+export default GameCard

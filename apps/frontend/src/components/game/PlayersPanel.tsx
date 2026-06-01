@@ -28,10 +28,8 @@ export function PlayersPanel() {
               player.isDrawing ? "bg-primary/20 border-2 border-primary" : "bg-muted/50 hover:bg-muted"
             )}
           >
-            {/* Rank */}
             <span className="text-sm font-bold text-muted-foreground w-5">#{index + 1}</span>
 
-            {/* Avatar */}
             <div
               className={cn(
                 "relative w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold",
@@ -41,7 +39,6 @@ export function PlayersPanel() {
               )}
             >
               {player.avatar}
-              {/* Online indicator */}
               <span
                 className={cn(
                   "absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-card",
@@ -50,7 +47,6 @@ export function PlayersPanel() {
               />
             </div>
 
-            {/* Info */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5">
                 <span
@@ -72,3 +68,5 @@ export function PlayersPanel() {
     </div>
   )
 }
+
+export default PlayersPanel

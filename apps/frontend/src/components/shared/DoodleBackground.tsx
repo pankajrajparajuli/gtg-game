@@ -60,3 +60,5 @@ export function DoodleBackground({ className = "" }: DoodleBackgroundProps) {
     </div>
   )
 }
+
+export default DoodleBackground

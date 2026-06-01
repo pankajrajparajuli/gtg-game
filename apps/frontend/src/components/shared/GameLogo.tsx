@@ -51,3 +51,5 @@ export function GameLogo({ className = "" }: GameLogoProps) {
     </div>
   )
 }
+
+export default GameLogo

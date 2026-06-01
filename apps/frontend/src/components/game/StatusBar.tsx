@@ -2,7 +2,7 @@
 
 import { Settings, Clock, LogOut } from "lucide-react"
 import { useGame } from "@/context/game-context"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui"
 
 export function StatusBar() {
   const { currentRoom, leaveRoom } = useGame()
@@ -20,7 +20,6 @@ export function StatusBar() {
 
   return (
     <div className="bg-card rounded-xl border-4 border-card-foreground/10 shadow-lg px-6 py-3 flex items-center justify-between">
-      {/* Left: Round info */}
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-2">
           <span className="text-muted-foreground font-medium">Round</span>
@@ -46,7 +45,6 @@ export function StatusBar() {
         </div>
       </div>
 
-      {/* Center: Room title & timer */}
       <div className="flex items-center gap-4">
         <h1 className="text-lg font-bold text-card-foreground">{currentRoom.title}</h1>
         {currentRoom.status === "drawing" && (
@@ -57,7 +55,6 @@ export function StatusBar() {
         )}
       </div>
 
-      {/* Right: Room code & settings */}
       <div className="flex items-center gap-3">
         {currentRoom.isPrivate && (
           <div className="bg-muted px-3 py-1.5 rounded-lg">
@@ -82,3 +79,5 @@ export function StatusBar() {
     </div>
   )
 }
+
+export default StatusBar
