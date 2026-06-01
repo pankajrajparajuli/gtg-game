@@ -1,28 +1,25 @@
-import { useEffect } from "react";
-import { SOCKET_EVENTS } from "@gtg/shared";
-import { useSocket } from "./hooks/useSocket.js";
+"use client"
 
-function App() {
-  const socketRef = useSocket();
+import { GameProvider, useGame } from "./context/game-context"
+import { LandingPage } from "./components/landing-page"
+import { GameRoom } from "./components/game-room"
 
-  useEffect(() => {
-    const socket = socketRef.current;
-    if (!socket) return;
+function GameContent() {
+  const { currentRoom } = useGame()
 
-    socket.emit(SOCKET_EVENTS.CREATE_ROOM);
+  // If connected to a room, show the game room
+  if (currentRoom) {
+    return <GameRoom />
+  }
 
-    const handleRoomCreated = (room: string) => {
-      console.log("Room created:", room);
-    };
-
-    socket.on(SOCKET_EVENTS.ROOM_CREATED, handleRoomCreated);
-
-    return () => {
-      socket.off(SOCKET_EVENTS.ROOM_CREATED, handleRoomCreated);
-    };
-  }, [socketRef]);
-
-  return <h1>GTG Game</h1>;
+  // Otherwise, show the landing page
+  return <LandingPage />
 }
 
-export default App;
+export default function Home() {
+  return (
+    <GameProvider>
+      <GameContent />
+    </GameProvider>
+  )
+}

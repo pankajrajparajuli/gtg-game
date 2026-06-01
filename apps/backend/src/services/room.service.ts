@@ -1,6 +1,6 @@
-import { nanoid } from "nanoid";
+import { customAlphabet } from "nanoid";
 import { REDIS_KEYS } from "@gtg/shared";
-import type { Room, Player } from "@gtg/shared";
+import type { Room, Player, RoomSettings } from "@gtg/shared";
 import redis from "../config/redis.js";
 
 /**
@@ -83,7 +83,12 @@ export async function joinRoom(
     return null;
   }
 
-  room.players.push(player);
+  room.players.push({
+    ...player,
+    isDrawing: false,
+    isHost: false,
+    isOnline: true,
+  });
 
   await redis.set(
     `${REDIS_KEYS.ROOM}:${room.id}`,
@@ -93,20 +98,41 @@ export async function joinRoom(
   return room;
 }
 
+const roomIdAlphabet = customAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 5);
+
 /**
  * Creates a brand new game room
  */
-export async function createRoom(hostId: string): Promise<Room> {
+export async function createRoom(
+  hostId: string,
+  hostName: string,
+  settings?: RoomSettings,
+): Promise<Room> {
+  const roomId = roomIdAlphabet();
   const room: Room = {
-    id: nanoid(6),
+    id: roomId,
+    code: roomId,
+    title: "Private Game Room",
+    isPrivate: true,
     hostId,
     players: [
       {
         id: hostId,
-        username: "Host",
+        username: hostName,
         score: 0,
+        isDrawing: false,
+        isHost: true,
+        isOnline: true,
       },
     ],
+    maxPlayers: settings?.maxPlayers ?? 8,
+    currentRound: 0,
+    totalRounds: settings?.totalRounds ?? 3,
+    drawTime: settings?.drawTime ?? 80,
+    status: "waiting",
+    currentWord: undefined,
+    currentDrawerId: undefined,
+    timeRemaining: settings?.drawTime ?? 80,
     createdAt: new Date().toISOString(),
   };
 
